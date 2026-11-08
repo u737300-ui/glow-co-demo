@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow &amp; Co. — Beauty Salon &amp; Spa Studio</title>
+<meta name="description" content="Glow & Co. — a fictional beauty salon demo landing page built by Qodra Dev. Hair, nails, facials and makeup with honest prices and easy booking.">
+<style>
+  :root{
+    --ink:#2c2226; --bg:#fdf8f5; --rose:#c4748a; --rose-dark:#a85670;
+    --blush:#f6e3e0; --sage:#7d8b74; --muted:#7a6a70; --card:#ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+  img{display:block;max-width:100%}
+  a{text-decoration:none;color:inherit}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+  h1,h2,h3,.serif{font-family:Georgia,'Times New Roman',serif;font-weight:normal}
+
+  /* Header */
+  header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(255,252,250,.94);backdrop-filter:blur(8px);
+         border-bottom:1px solid #f0dedd}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-size:1.5rem}
+  .logo em{color:var(--rose);font-style:normal}
+  .nav-links{display:flex;gap:28px;font-size:.93rem;color:#57474e}
+  .nav-links a:hover{color:var(--rose)}
+  .btn{display:inline-block;background:var(--rose);color:#fff;padding:12px 28px;border-radius:999px;
+       font-weight:600;font-size:.95rem;border:none;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--rose-dark)}
+  .btn.small{padding:9px 20px;font-size:.88rem}
+  .btn.ghost{background:transparent;border:2px solid #fff}
+  .menu-toggle{display:none;background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--ink)}
+
+  /* Hero */
+  .hero{min-height:90vh;display:flex;align-items:center;position:relative;color:#fff;
+        background:url('img/hero.jpg') center/cover no-repeat}
+  .hero::before{content:'';position:absolute;inset:0;
+        background:linear-gradient(90deg,rgba(46,26,34,.72) 0%,rgba(46,26,34,.38) 55%,rgba(46,26,34,.08) 100%)}
+  .hero-inner{position:relative;z-index:1;padding:120px 0 80px}
+  .kicker{letter-spacing:3px;text-transform:uppercase;font-size:.8rem;color:#f3c6d3;margin-bottom:14px}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.1;max-width:600px}
+  .hero p{max-width:500px;margin:20px 0 30px;font-size:1.1rem;color:#fbeef2}
+  .hero-badges{display:flex;gap:22px;flex-wrap:wrap;margin-top:32px;font-size:.9rem;color:#fbeef2}
+  .hero-badges span::before{content:'✦ ';color:#f3c6d3}
+
+  section{padding:84px 0}
+  .section-head{text-align:center;max-width:620px;margin:0 auto 48px}
+  .section-head .kicker{color:var(--rose)}
+  .section-head h2{font-size:2.15rem;margin:8px 0 12px}
+  .section-head p{color:var(--muted)}
+
+  /* Services */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .svc{background:var(--card);border-radius:18px;overflow:hidden;box-shadow:0 8px 26px rgba(120,70,90,.10)}
+  .svc img{height:200px;width:100%;object-fit:cover}
+  .svc-body{padding:22px}
+  .svc h3{font-size:1.25rem;margin-bottom:6px}
+  .svc p{color:var(--muted);font-size:.95rem}
+  .price-list{margin-top:16px;border-top:1px dashed #ecd5d8;padding-top:12px;display:grid;gap:7px;font-size:.93rem}
+  .price-list div{display:flex;justify-content:space-between}
+  .price-list b{color:var(--rose-dark);font-weight:600;white-space:nowrap;padding-left:12px}
+
+  /* Gallery */
+  .gallery{background:#fff}
+  .gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .gal-grid img{border-radius:14px;height:230px;width:100%;object-fit:cover;transition:transform .25s}
+  .gal-grid img:hover{transform:scale(1.03)}
+
+  /* Why us */
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .why{background:var(--blush);border-radius:18px;padding:28px;text-align:center}
+  .why .icon{font-size:1.9rem;margin-bottom:10px}
+  .why h3{font-size:1.15rem;margin-bottom:8px}
+  .why p{color:#6d5961;font-size:.94rem}
+
+  /* Booking */
+  .book{background:linear-gradient(rgba(46,26,34,.88),rgba(46,26,34,.88)),url('img/interior.jpg') center/cover no-repeat;color:#fff}
+  .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .book h2{font-size:2.1rem;margin-bottom:14px}
+  .book p{color:#f3dde3;max-width:420px}
+  .info{margin-top:24px;line-height:2;font-size:.95rem}
+  .info b{color:#f3c6d3;font-weight:600}
+  form{background:#fff;color:var(--ink);border-radius:18px;padding:30px;display:grid;gap:14px}
+  label{font-size:.85rem;font-weight:600;display:grid;gap:6px}
+  input,select,textarea{font:inherit;font-size:.98rem;padding:11px 14px;border:1px solid #e3cfd2;border-radius:10px;background:#fffafa;width:100%}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--rose);border-color:transparent}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .form-note{font-size:.8rem;color:var(--muted);text-align:center}
+  .sent{display:none;background:#edf4e8;border:1px solid #b7cfa5;color:#3c5a24;border-radius:10px;
+        padding:12px 14px;font-size:.9rem}
+
+  /* Footer */
+  .site-footer{background:#241419;color:#cdb2ba;padding:44px 0 30px}
+  .foot-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  .site-footer h4{color:#fff;font-size:1.15rem;margin-bottom:8px}
+  .demo-label{margin-top:28px;padding-top:18px;border-top:1px solid #453038;font-size:.82rem;color:#9d7f89;text-align:center}
+
+  @media(max-width:860px){
+    .svc-grid,.why-grid{grid-template-columns:1fr}
+    .gal-grid{grid-template-columns:repeat(2,1fr)}
+    .book-grid{grid-template-columns:1fr}
+    .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;
+                flex-direction:column;padding:18px 20px;gap:16px;border-bottom:1px solid #f0dedd}
+    .nav-links.open{display:flex}
+    .menu-toggle{display:block}
+    section{padding:60px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo serif" href="#">Glow <em>&amp;</em> Co.</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#services">Services</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#why">Why Us</a>
+      <a href="#book">Book</a>
+    </nav>
+    <a class="btn small" href="#book">Book Now</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <p class="kicker">Hair · Nails · Skin · Makeup</p>
+    <h1>Walk in tired.<br>Walk out glowing.</h1>
+    <p>Glow &amp; Co. is a calm little studio for hair, nails, facials and makeup — honest prices, senior stylists, and bookings that take less than a minute.</p>
+    <a class="btn" href="#book">Book an Appointment</a>
+    <a class="btn ghost" href="#services" style="margin-left:10px">See Prices</a>
+    <div class="hero-badges">
+      <span>4.9 from 860+ clients</span>
+      <span>Senior stylists only</span>
+      <span>Open 7 days</span>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Services &amp; Prices</p>
+      <h2>Everything on the menu, nothing hidden</h2>
+      <p>Every price below is the price you pay. Consultations are always free, and we'll tell you honestly if a treatment isn't right for you.</p>
+    </div>
+    <div class="svc-grid">
+      <article class="svc">
+        <img src="img/hair.jpg" alt="Stylist finishing a haircut">
+        <div class="svc-body">
+          <h3>Hair Studio</h3>
+          <p>Cuts, colour and styling by stylists with 8+ years behind the chair.</p>
+          <div class="price-list">
+            <div><span>Cut &amp; finish</span><b>from $35</b></div>
+            <div><span>Full colour</span><b>from $70</b></div>
+            <div><span>Balayage</span><b>from $95</b></div>
+            <div><span>Keratin treatment</span><b>from $120</b></div>
+          </div>
+        </div>
+      </article>
+      <article class="svc">
+        <img src="img/nails.jpg" alt="Freshly done manicure">
+        <div class="svc-body">
+          <h3>Nails</h3>
+          <p>Manicures and pedicures with salon-grade polish that actually lasts.</p>
+          <div class="price-list">
+            <div><span>Classic manicure</span><b>$22</b></div>
+            <div><span>Gel manicure</span><b>$34</b></div>
+            <div><span>Spa pedicure</span><b>$38</b></div>
+            <div><span>Nail art (per set)</span><b>from $12</b></div>
+          </div>
+        </div>
+      </article>
+      <article class="svc">
+        <img src="img/facial.jpg" alt="Client relaxing during a facial">
+        <div class="svc-body">
+          <h3>Skin &amp; Facials</h3>
+          <p>Gentle, results-first facials matched to your skin on the day — not a script.</p>
+          <div class="price-list">
+            <div><span>Express glow facial</span><b>$30</b></div>
+            <div><span>Signature 60-min facial</span><b>$55</b></div>
+            <div><span>Deep-cleanse facial</span><b>$62</b></div>
+            <div><span>Brow shape &amp; tint</span><b>$18</b></div>
+          </div>
+        </div>
+      </article>
+      <article class="svc">
+        <img src="img/makeup.jpg" alt="Makeup artist applying makeup">
+        <div class="svc-body">
+          <h3>Makeup</h3>
+          <p>Occasion and bridal makeup, with a trial session so there are no surprises.</p>
+          <div class="price-list">
+            <div><span>Occasion makeup</span><b>$45</b></div>
+            <div><span>Bridal makeup + trial</span><b>$130</b></div>
+            <div><span>Party lashes</span><b>$15</b></div>
+            <div><span>Makeup lesson (1 hr)</span><b>$50</b></div>
+          </div>
+        </div>
+      </article>
+      <article class="svc">
+        <img src="img/style.jpg" alt="Hair styling in progress">
+        <div class="svc-body">
+          <h3>Styling &amp; Events</h3>
+          <p>Up-dos, blowouts and full getting-ready packages for your big day.</p>
+          <div class="price-list">
+            <div><span>Blowout</span><b>from $28</b></div>
+            <div><span>Occasion up-do</span><b>from $48</b></div>
+            <div><span>Bridal party (4 people)</span><b>from $260</b></div>
+          </div>
+        </div>
+      </article>
+      <article class="svc">
+        <img src="img/interior.jpg" alt="Inside the Glow and Co. salon">
+        <div class="svc-body">
+          <h3>Packages</h3>
+          <p>Bundle and save — our most-booked combinations for a full reset.</p>
+          <div class="price-list">
+            <div><span>Glow Day (facial + mani + pedi)</span><b>$95</b></div>
+            <div><span>Hair Refresh (cut + colour + treatment)</span><b>$140</b></div>
+            <div><span>Bridal Trial Package</span><b>$110</b></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">The Studio</p>
+      <h2>Recent work &amp; the space</h2>
+    </div>
+    <div class="gal-grid">
+      <img src="img/hair.jpg" alt="Hair styling result">
+      <img src="img/makeup.jpg" alt="Makeup application">
+      <img src="img/nails.jpg" alt="Nail art close-up">
+      <img src="img/style.jpg" alt="Salon styling session">
+      <img src="img/facial.jpg" alt="Facial treatment">
+      <img src="img/interior.jpg" alt="Salon interior">
+      <img src="img/hero.jpg" alt="Glow and Co. studio">
+      <img src="img/nails.jpg" alt="Manicure detail">
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Why Glow &amp; Co.</p>
+      <h2>Small studio, high standards</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why">
+        <div class="icon">✂️</div>
+        <h3>Senior hands only</h3>
+        <p>No juniors learning on your hair. Every stylist and therapist has at least 8 years of experience.</p>
+      </div>
+      <div class="why">
+        <div class="icon">💬</div>
+        <h3>Honest advice</h3>
+        <p>Free consultations before every colour or treatment — including when the honest answer is "don't do it yet."</p>
+      </div>
+      <div class="why">
+        <div class="icon">🕐</div>
+        <h3>On time, every time</h3>
+        <p>Your appointment starts at the time you booked. Running more than 10 minutes late? Your next visit is on us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="book" id="book">
+  <div class="wrap book-grid">
+    <div>
+      <h2>Book your visit</h2>
+      <p>Pick a service and a time — the form opens a pre-written email to our front desk so we can confirm your slot personally.</p>
+      <div class="info">
+        <div><b>Mon – Fri</b> &nbsp;9:00 – 20:00</div>
+        <div><b>Saturday</b> &nbsp;9:00 – 18:00</div>
+        <div><b>Sunday</b> &nbsp;10:00 – 16:00</div>
+        <div style="margin-top:12px">8 Rosewater Street · (555) 016-7743</div>
+      </div>
+    </div>
+    <form id="bookForm">
+      <div class="form-row">
+        <label>Your name
+          <input type="text" id="bName" required placeholder="e.g. Jamie Lee">
+        </label>
+        <label>Phone
+          <input type="tel" id="bPhone" required placeholder="e.g. 555 010 8811">
+        </label>
+      </div>
+      <label>Service
+        <select id="bService">
+          <option>Cut &amp; finish — from $35</option>
+          <option>Full colour — from $70</option>
+          <option>Balayage — from $95</option>
+          <option>Gel manicure — $34</option>
+          <option>Spa pedicure — $38</option>
+          <option>Signature facial — $55</option>
+          <option>Occasion makeup — $45</option>
+          <option>Glow Day package — $95</option>
+          <option>Free consultation</option>
+        </select>
+      </label>
+      <div class="form-row">
+        <label>Preferred date
+          <input type="date" id="bDate" required>
+        </label>
+        <label>Preferred time
+          <select id="bTime">
+            <option>09:30</option><option>11:00</option><option selected>12:30</option>
+            <option>14:00</option><option>15:30</option><option>17:00</option><option>18:30</option>
+          </select>
+        </label>
+      </div>
+      <label>Notes <span style="font-weight:normal;color:#7a6a70">(optional)</span>
+        <textarea id="bNotes" rows="3" placeholder="Stylist preference, inspiration photo, allergies…"></textarea>
+      </label>
+      <button class="btn" type="submit">Request Booking</button>
+      <p class="sent" id="bookSent">✓ Opening your email app with the booking — just press send and we'll confirm your slot.</p>
+      <p class="form-note">No account needed. The form composes an email in your own mail app.</p>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4 class="serif">Glow &amp; Co.</h4>
+        <p>Beauty salon &amp; spa studio<br>8 Rosewater Street</p>
+      </div>
+      <div>
+        <h4 class="serif">Visit</h4>
+        <p>Open 7 days<br>Walk-ins welcome for nails</p>
+      </div>
+      <div>
+        <h4 class="serif">Contact</h4>
+        <p>(555) 016-7743<br>hello@glowandco.example</p>
+      </div>
+    </div>
+    <p class="demo-label">Demo project built by Qodra Dev — Glow &amp; Co. is a fictional salon created to demonstrate landing-page design and development. Photos: Unsplash.</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  var toggle = document.getElementById('menuToggle');
+  var links = document.getElementById('navLinks');
+  toggle.addEventListener('click', function(){ links.classList.toggle('open'); });
+  links.addEventListener('click', function(){ links.classList.remove('open'); });
+
+  // Booking form -> composes an email in the visitor's mail app
+  document.getElementById('bookForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('bName').value.trim();
+    var phone = document.getElementById('bPhone').value.trim();
+    var service = document.getElementById('bService').value;
+    var date = document.getElementById('bDate').value;
+    var time = document.getElementById('bTime').value;
+    var notes = document.getElementById('bNotes').value.trim();
+    var subject = 'Booking request — ' + service + ' — ' + name;
+    var body = 'Hello Glow & Co.,\n\nI would like to book an appointment.\n\n' +
+               'Name: ' + name + '\nPhone: ' + phone + '\nService: ' + service +
+               '\nPreferred date: ' + date + '\nPreferred time: ' + time +
+               (notes ? '\nNotes: ' + notes : '') +
+               '\n\nPlease confirm availability. Thank you!';
+    window.location.href = 'mailto:hello@glowandco.example' +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+    document.getElementById('bookSent').style.display = 'block';
+  });
+</script>
+</body>
+</html>
